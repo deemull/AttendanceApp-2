@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -18,7 +19,6 @@ public class Main {
         ArrayList<Integer> absences = new ArrayList<>();
         //add random number of absences based on length of name
         for (int i = 0; i < name.length(); i++) {
-
             Random rand = new Random();
             int num = rand.nextInt(11);
             absences.add(num);
@@ -34,10 +34,19 @@ public class Main {
         System.out.printf("Class meetings per week: ");
         num = readInput.nextInt();
         //System.out.printf("Formatted %d divided by %d is %.2f%%", num, num2, percentage);
-        System.out.printf("%f students FE'd the course", percentageOfStudentsFE(absences));
-        System.out.printf("Percentage of non-FE students: " + nonFEStudents(absences));
+        System.out.printf(percentageOfStudentsFE(absences) + " of students FE'd the course ");
+        System.out.printf("\n%.2f Percent of non-FE students: ", nonFEAbsences(absences));
+        System.out.printf("\nAdd how many to absences? ");
+        int add = readInput.nextInt();
+        System.out.printf("To numbers greater than: ");
+        num = readInput.nextInt();
+        newAbsences(absences, num, add);
+        Collections.sort(absences);
+        System.out.println(absences);
+        Collections.shuffle(absences);
+        System.out.println(absences);
+        System.out.printf("\nThe list has " + uniqueAbsences(absences) + " unique absences. ");
 
-        //Collections.sort(absences);
     }
 
     private static double average(ArrayList<Integer> list) {
@@ -52,8 +61,8 @@ public class Main {
         return sum;
     }
 
-    private static double studentsWithPerfectAttends(ArrayList<Integer> list) {
-        double count = 0;
+    private static int studentsWithPerfectAttends(ArrayList<Integer> list) {
+        int count = 0;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) == 0) {
                 count++;
@@ -68,7 +77,7 @@ public class Main {
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) < num && list.get(i) == 0) {
                 count++;
-                count = count / list.size();
+                count = (count / list.size()) * 100;
             }
         }
         return count;
@@ -87,22 +96,41 @@ public class Main {
     private static double percentageOfStudentsFE(ArrayList<Integer> list) {
         ArrayList<Integer> feAbsences = new ArrayList<>();
         int num = 3;
-        int count = 0;
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) >= (num * 2)) {
-                count++;
                 feAbsences.add(i);
             }
         }
-        return count;
+        return ((double) feAbsences.size() / list.size()) * 100;
     }
 
-    private static double nonFEStudents(ArrayList<Integer> list) {
-        int num = 0;
-        double count = 0;
+    private static double nonFEAbsences(ArrayList<Integer> list) {
+        ArrayList<Integer> nonFeAbsences = new ArrayList<>();
+        int num = 3;
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) != percentageOfStudentsFE(list)) {
-                count = count / list.size();
+            if (list.get(i) < (num * 2)) {
+                nonFeAbsences.add(i);
+            }
+        }
+        return (double) nonFeAbsences.size() / list.size();
+    }
+
+    private static void newAbsences(ArrayList<Integer> list, int num, int add) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) > num) {
+                list.set(i, list.get(i) + add);
+            }
+        }
+        System.out.println(list);
+    }
+
+    private static int uniqueAbsences(ArrayList<Integer> list) {
+        int count = 0;
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = i + 1; j < list.size(); j++) {
+                if (list.get(i) == list.get(j)) {
+                    count++;
+                }
             }
         }
         return count;
