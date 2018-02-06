@@ -1,7 +1,4 @@
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
 
 public class Main {
 
@@ -27,7 +24,7 @@ public class Main {
         System.out.println("Students with perfect attendance: " + studentsWithPerfectAttends(absences));
         System.out.println("Average absences are: " + average(absences));
         System.out.println("Percentage of students with less than 3 absences and perfect attendance: " +
-                lessThan3AbsencesAndPerfectAttendance(absences));
+                lessAbsencesAndPerfectAttendance(absences));
         System.out.printf("Number of absences? ");
         int num = readInput.nextInt();
         System.out.printf("Students with " + num + " absences: " + xAbsences(absences, num) + "\n");
@@ -41,11 +38,17 @@ public class Main {
         System.out.printf("To numbers greater than: ");
         num = readInput.nextInt();
         newAbsences(absences, num, add);
+        System.out.println("New absences: " + absences);
         Collections.sort(absences);
         System.out.println(absences);
         Collections.shuffle(absences);
         System.out.println(absences);
-        System.out.printf("\nThe list has " + uniqueAbsences(absences) + " unique absences. ");
+        System.out.printf("The list has " + uniqueAbsences(absences) + " unique absences. ");
+        System.out.printf("Each number of absences: " + eachAbsence(absences));
+        System.out.printf("Sorted in ascending order: " + userSort(absences));
+        System.out.printf("Shuffled list: " + userShuffle(absences));
+
+
 
     }
 
@@ -71,11 +74,11 @@ public class Main {
         return count;
     }
 
-    private static double lessThan3AbsencesAndPerfectAttendance(ArrayList<Integer> list) {
+    private static double lessAbsencesAndPerfectAttendance(ArrayList<Integer> list) {
         int num = 3;
         double count = 0;
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) < num && list.get(i) == 0) {
+            if (list.get(i) < num || list.get(i) == 0) {
                 count++;
                 count = (count / list.size()) * 100;
             }
@@ -86,7 +89,7 @@ public class Main {
     private static ArrayList<Integer> xAbsences(ArrayList<Integer> list, int num) {
         ArrayList<Integer> numAbsences = new ArrayList<>();
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i).equals(num)) {
+            if (list.get(i) == num) {
                 numAbsences.add(i);
             }
         }
@@ -120,20 +123,61 @@ public class Main {
             if (list.get(i) > num) {
                 list.set(i, list.get(i) + add);
             }
+            if (list.get(i) > 15) {
+                list.set(i, 15);
+            }
+            if (list.get(i) < 0) {
+                list.set(i, 0);
+            }
         }
-        System.out.println(list);
     }
 
     private static int uniqueAbsences(ArrayList<Integer> list) {
+        Collections.sort(list);
         int count = 0;
-        for (int i = 0; i < list.size(); i++) {
-            for (int j = i + 1; j < list.size(); j++) {
-                if (list.get(i) == list.get(j)) {
-                    count++;
-                }
+        for (int i = 0; i < list.size() - 1; i++) {
+            if (list.get(i) != list.get(i + 1)) {
+                count++;
             }
         }
         return count;
     }
+
+    public static ArrayList<Integer> eachAbsence(ArrayList<Integer> list) {
+        Collections.sort(list);
+        ArrayList<Integer> numAbsences = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i) != list.get(i + 1)) {
+                numAbsences.add(i);
+            }
+        }
+        return numAbsences;
+    }
+
+    public static ArrayList<Integer> userSort(ArrayList<Integer> list) {
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size() - 1; j++) {
+                if (list.get(i) > list.get(j)) {
+                    int temp = list.get(i);
+                    list.set(i, list.get(j));
+                    list.set(j, temp);
+                }
+            }
+        }
+        return userSort(list);
+    }
+
+    public static ArrayList<Integer> userShuffle(ArrayList<Integer> list) {
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size() - 1; j++) {
+                int swap = list.get(i);
+                list.set(i, list.get(j));
+                list.set(j, swap);
+            }
+        }
+        return userShuffle(list);
+    }
+
+
 
 }
