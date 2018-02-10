@@ -47,7 +47,8 @@ public class Main {
         System.out.printf("Each number of absences: " + eachAbsence(absences));
         System.out.printf("Sorted in ascending order: " + userSort(absences));
         System.out.printf("Shuffled list: " + userShuffle(absences));
-
+        ArrayList<String> names = new ArrayList<>();
+        System.out.println(nameShuffle(names));
 
 
     }
@@ -143,12 +144,12 @@ public class Main {
         return count;
     }
 
-    public static ArrayList<Integer> eachAbsence(ArrayList<Integer> list) {
+    public static Map<ArrayList<Integer>, Integer> eachAbsence(ArrayList<Integer> list) {
         Collections.sort(list);
-        ArrayList<Integer> numAbsences = new ArrayList<>();
+        Map<ArrayList<Integer>, Integer> numAbsences = new HashMap<>();
         for (int i = 0; i < list.size(); i++) {
             if (list.get(i) != list.get(i + 1)) {
-                numAbsences.add(i);
+                numAbsences.put(list, list.get(i));
             }
         }
         return numAbsences;
@@ -164,7 +165,7 @@ public class Main {
                 }
             }
         }
-        return userSort(list);
+        return list;
     }
 
     public static ArrayList<Integer> userShuffle(ArrayList<Integer> list) {
@@ -175,8 +176,33 @@ public class Main {
                 list.set(j, swap);
             }
         }
-        return userShuffle(list);
+        return list;
     }
+
+    public static ArrayList<String> distinctNames(String name, int num) {
+        ArrayList<String> names = new ArrayList<>();
+        for (int i = 0; i < num; i++) {
+            names.add(name);
+        }
+        return names;
+    }
+
+    public static ArrayList<String> nameShuffle(ArrayList<String> list) {
+        for (int i = 0; i < list.size(); i++) {
+            for (int j = 0; j < list.size() - 1; j++) {
+                String swap = list.get(i);
+                list.set(i, list.get(j));
+                list.set(j, swap);
+            }
+        }
+        return list;
+    }
+    /*public static ArrayList<String> sameSize(ArrayList<String> list){
+
+    }
+    */
+
+
 
 
 
