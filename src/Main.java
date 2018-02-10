@@ -47,8 +47,11 @@ public class Main {
         System.out.printf("Each number of absences: " + eachAbsence(absences));
         System.out.printf("Sorted in ascending order: " + userSort(absences));
         System.out.printf("Shuffled list: " + userShuffle(absences));
-        ArrayList<String> names = new ArrayList<>();
-        System.out.println(nameShuffle(names));
+        ArrayList<String> nameList = new ArrayList<>();
+        System.out.printf("What is the name? ");
+        String names = readInput.next();
+        System.out.println(distinctNames(names, num));
+        System.out.println(nameShuffle(nameList));
 
 
     }
