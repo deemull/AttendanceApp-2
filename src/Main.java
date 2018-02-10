@@ -52,7 +52,9 @@ public class Main {
         String names = readInput.next();
         System.out.println(distinctNames(names, num));
         System.out.println(nameShuffle(nameList));
-
+        System.out.println(sameSize(nameList));
+        System.out.println(namesUsedOnce(nameList));
+        
 
     }
 
@@ -200,13 +202,22 @@ public class Main {
         }
         return list;
     }
-    /*public static ArrayList<String> sameSize(ArrayList<String> list){
 
+    public static ArrayList<String> sameSize(ArrayList<String> names) {
+        ArrayList<String> sameListSize = new ArrayList<>();
+        for (int i = 0; i < names.size(); i++) {
+            sameListSize.add(names.get(i));
+        }
+        return sameListSize;
     }
-    */
 
-
-
-
+    public static boolean namesUsedOnce(ArrayList<String> names) {
+        for (int i = 0; i < names.size(); i++) {
+            if (names.get(i).equals(names.get(i + 1))) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
