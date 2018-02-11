@@ -54,7 +54,7 @@ public class Main {
         System.out.println(nameShuffle(nameList));
         System.out.println(sameSize(nameList));
         System.out.println(namesUsedOnce(nameList));
-        
+
 
     }
 
@@ -82,14 +82,17 @@ public class Main {
 
     private static double lessAbsencesAndPerfectAttendance(ArrayList<Integer> list) {
         int num = 3;
-        double count = 0;
+        double countLessThan = 0;
+        double countPerfect = 0;
         for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) < num || list.get(i) == 0) {
-                count++;
-                count = (count / list.size()) * 100;
+            if (list.get(i) < num) {
+                countLessThan++;
+            }
+            if (list.get(i) == 0) {
+                countPerfect++;
             }
         }
-        return count;
+        return countLessThan / countPerfect;
     }
 
     private static ArrayList<Integer> xAbsences(ArrayList<Integer> list, int num) {
@@ -219,5 +222,9 @@ public class Main {
         }
         return false;
     }
+    /*public static ArrayList<String> perfectStudents(ArrayList<Integer> list, ArrayList<String> names) {
+
+    }
+    */
 
 }
