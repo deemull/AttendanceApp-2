@@ -1,3 +1,4 @@
+import java.time.LocalDate;
 import java.util.*;
 
 public class Main {
@@ -48,12 +49,20 @@ public class Main {
         System.out.printf("Sorted in ascending order: " + userSort(absences));
         System.out.printf("Shuffled list: " + userShuffle(absences));
         ArrayList<String> nameList = new ArrayList<>();
+        ArrayList<String> date = new ArrayList<>();
         System.out.printf("What is the name? ");
         String names = readInput.next();
         System.out.println(distinctNames(names, num));
         System.out.println(nameShuffle(nameList));
-        System.out.println(sameSize(nameList));
+        System.out.println(sameSize(absences, nameList));
         System.out.println(namesUsedOnce(nameList));
+        System.out.println(perfectStudents(absences, nameList));
+        System.out.println(studentsFE(absences, nameList));
+        System.out.println(numOfClasses(absences, nameList));
+        //System.out.println(FEcourses(absences, nameList));
+        System.out.println(localDate());
+        //System.out.println(daysAlive(date, ));
+        //System.out.println(listOfDates(date, ));
 
 
     }
@@ -152,12 +161,12 @@ public class Main {
         return count;
     }
 
-    public static Map<ArrayList<Integer>, Integer> eachAbsence(ArrayList<Integer> list) {
+    public static Map<Integer, Integer> eachAbsence(ArrayList<Integer> list) {
         Collections.sort(list);
-        Map<ArrayList<Integer>, Integer> numAbsences = new HashMap<>();
-        for (int i = 0; i < list.size(); i++) {
-            if (list.get(i) != list.get(i + 1)) {
-                numAbsences.put(list, list.get(i));
+        Map<Integer, Integer> numAbsences = new HashMap<>();
+        for (int key : numAbsences.keySet()) {
+            if (numAbsences.containsKey(key)) {
+                numAbsences.put(key, 1);
             }
         }
         return numAbsences;
@@ -166,7 +175,7 @@ public class Main {
     public static ArrayList<Integer> userSort(ArrayList<Integer> list) {
         for (int i = 0; i < list.size(); i++) {
             for (int j = 0; j < list.size() - 1; j++) {
-                if (list.get(i) > list.get(j)) {
+                if (list.get(i) < list.get(j)) {
                     int temp = list.get(i);
                     list.set(i, list.get(j));
                     list.set(j, temp);
@@ -206,15 +215,18 @@ public class Main {
         return list;
     }
 
-    public static ArrayList<String> sameSize(ArrayList<String> names) {
+    public static ArrayList<String> sameSize(ArrayList<Integer> absences, ArrayList<String> names) {
+        Random rand = new Random();
         ArrayList<String> sameListSize = new ArrayList<>();
-        for (int i = 0; i < names.size(); i++) {
-            sameListSize.add(names.get(i));
+        for (int i = 0; i < absences.size(); i++) {
+            String name = names.get(rand.nextInt(5));
+            sameListSize.add(name);
         }
         return sameListSize;
     }
 
     public static boolean namesUsedOnce(ArrayList<String> names) {
+
         for (int i = 0; i < names.size(); i++) {
             if (names.get(i).equals(names.get(i + 1))) {
                 return true;
@@ -222,9 +234,83 @@ public class Main {
         }
         return false;
     }
-    /*public static ArrayList<String> perfectStudents(ArrayList<Integer> list, ArrayList<String> names) {
+
+    public static ArrayList<String> perfectStudents(ArrayList<Integer> absences, ArrayList<String> names) {
+        ArrayList<String> students = new ArrayList<>();
+        for (int i = 0; i < absences.size(); i++) {
+            if (absences.get(i) == 0) {
+                students.add(names.get(absences.get(i)));
+            }
+        }
+        return students;
+    }
+
+    public static ArrayList<String> studentsFE(ArrayList<Integer> list, ArrayList<String> names) {
+        ArrayList<String> students = new ArrayList<>();
+        for (int i = 0; i < list.size(); i++) {
+
+        }
+        return students;
+    }
+
+    public static int numOfClasses(ArrayList<Integer> list, ArrayList<String> names) {
+        int count = 0;
+        for (int i = 0; i < list.size(); i++) {
+            if (names.get(i).equals(list.get(i))) {
+                count++;
+            }
+        }
+        return count;
+    }
+
+    /*public static ArrayList<Integer> FEcourses (ArrayList<Integer> list, ArrayList<String> courses) {
+        ArrayList<Integer> courseIndexes = new ArrayList<>();
+        for (int i = 0; i < courses.size(); i++) {
+            if (courses.get(i).equals()){
+
+            }
+        }
+        return courseIndexes;
+
 
     }
     */
+    public static LocalDate localDate() {
+        LocalDate today = LocalDate.now();
+        return today;
+    }
+
+    public static int daysAlive(int day, int month, int year) {
+        LocalDate today = LocalDate.now();
+        LocalDate birthDate = LocalDate.of(year, month, day);
+        int totalYears = (int) birthDate.toEpochDay();
+        int numDays = (int) today.toEpochDay();
+        int totalDays = numDays - totalYears;
+        return totalDays;
+    }
+
+    public static ArrayList<LocalDate> listOfDates(ArrayList<String> list, int month, int day, int year) {
+        Random rand = new Random();
+        ArrayList<LocalDate> dates = new ArrayList<>();
+        LocalDate today = LocalDate.now();
+        dates.add(today);
+        LocalDate birthDay = LocalDate.of(year, month, day);
+        dates.add(birthDay);
+        for (int i = 0; i < list.size(); i++) {
+            today = today.minusDays(rand.nextInt(20));
+            dates.add(today);
+        }
+        return dates;
+    }
+    /*public static LocalDate min(ArrayList<LocalDate> dates) {
+        LocalDate minTime = dates.get(0);
+        for (int i = 0; i < dates.size(); i++) {
+            if (dates.get(i).isBefore(minTime)) {
+
+            }
+        }
+    }
+    */
+
 
 }
