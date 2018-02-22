@@ -64,6 +64,40 @@ public class Main {
         //System.out.println(daysAlive(date, ));
         //System.out.println(listOfDates(date, ));
 
+        Record xavier = new Record();
+        System.out.println(xavier);
+        xavier.setDate(xavier.getDate().minusDays(10));
+        xavier.setNumAbsences(xavier.getName().length());
+        Record student = new Record("Derrick", 2, LocalDate.now());
+        Record derrick = new Record("derrick", 1, LocalDate.of(1996, 10, 2));
+        Record nonDefault = new Record("Winston", 0, LocalDate.of(1957, 11, 28));
+        String swap = student.getName();
+        student.setName(nonDefault.getName());
+        nonDefault.setName(swap);
+        derrick.setNumAbsences(student.getNumAbsences() + nonDefault.getNumAbsences());
+        System.out.println(xavier.getLowestAbsences(student, derrick, nonDefault));
+
+
+        ArrayList<Record> records = new ArrayList<>();
+        records.add(student);
+        records.add(derrick);
+        records.add(nonDefault);
+        int high = student.getNumAbsences();
+        String most = student.getName();
+        for (Record record : records) {
+            if (record.getNumAbsences() > high) {
+                most = record.getName();
+                high = record.getNumAbsences();
+            }
+            System.out.println(most);
+
+        }
+        for (Record record : records) {
+            if (record.getNumAbsences() % 2 == 0) {
+                record.setNumAbsences(record.getNumAbsences() + 1);
+            }
+            System.out.println(record);
+        }
 
     }
 
